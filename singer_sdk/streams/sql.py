@@ -190,7 +190,7 @@ class SQLStream(Stream, metaclass=abc.ABCMeta):
             if start_val:
                 query = query.where(
                     sqlalchemy.text(":replication_key >= :start_val").bindparams(
-                        replication_key=replication_key_col, start_val=start_val
+                        replication_key=str(replication_key_col), start_val=start_val
                     )
                 )
 
