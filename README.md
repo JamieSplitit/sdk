@@ -12,6 +12,10 @@ Taps and targets built on the SDK are automatically compliant with the
 [Singer Spec](https://hub.meltano.com/singer/spec), the
 de-facto open source standard for extract and load pipelines.
 
+## Customisations in fork
+This fork is specifically to allow compatability with `tap-snowflake` for incrementally replicated streams. See comemnt and code update here for details:
+https://github.com/JamieSplitit/sdk/blob/602a4dda7c57e904181fd323dc6744fadb81f73c/singer_sdk/streams/sql.py#L191-L200
+
 ## Future-proof extractors and loaders, with less code
 
 On average, developers tell us that they write about 70% less code by using the SDK, which
