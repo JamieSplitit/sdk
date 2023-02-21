@@ -188,12 +188,16 @@ class SQLStream(Stream, metaclass=abc.ABCMeta):
 
             start_val = self.get_starting_replication_key_value(context)
             if start_val:
+                # When using commented out lines below, `snowflake.SQLAlchemy` attempts to pull through the `Column` object rather than the column name.
+                # This results in the exception being caught and producing a full refresh every time.
+                # By building the string first, the where clause acts as expected for a timestamp.
+                where_clause_template = f"{replication_key_col} >= '{start_val}'"
                 query = query.where(
-                    sqlalchemy.text(":replication_key >= :start_val").bindparams(
-                        replication_key=str(replication_key_col), start_val=start_val
-                    )
+                    # sqlalchemy.text(":replication_key >= :start_val").bindparams(
+                    #     replication_key=replication_key_col, start_val=start_val
+                    # )
+                    sqlalchemy.text(where_clause_template)
                 )
-
         if self._MAX_RECORDS_LIMIT is not None:
             query = query.limit(self._MAX_RECORDS_LIMIT)
 
